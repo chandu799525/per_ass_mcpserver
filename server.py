@@ -1,6 +1,7 @@
 import pandas as pd
 from mcp.server.fastmcp import FastMCP
 import os
+import uvicorn
 
 mcp = FastMCP("vishesh")
 
@@ -28,8 +29,4 @@ async def get_company_faq() -> str:
         return f"❌ Failed to read FAQ Excel: {str(e)}"
 
 if __name__ == "__main__":
-    mcp.run(
-        transport="streamable-http", 
-        host="0.0.0.0",
-        port=int(os.environ.get("PORT", 10000))
-    )
+    uvicorn.run(mcp.sse_app, host="0.0.0.0", port=int(os.environ.get("PORT", 10000)))
