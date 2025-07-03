@@ -28,7 +28,5 @@ async def get_company_faq() -> str:
     except Exception as e:
         return f"❌ Failed to read FAQ Excel: {str(e)}"
 
-mcp.add_transport("streamable-http")
-
 if __name__ == "__main__":
     uvicorn.run(mcp.sse_app, host="0.0.0.0", port=int(os.environ.get("PORT", 10000)))
